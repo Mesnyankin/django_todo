@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h2>Список задач</h2>
+  <a href="{% url 'task_create' %}">Добавить задачу</a>
+  <ul>
+    {% for task in tasks %}
+      <li>
+        <strong>{{ task.title }}</strong> - {{ task.description }}
+        <a href="{% url 'task_update' task.id %}">✏️</a>
+        <a href="{% url 'task_delete' task.id %}" style="color: red;">❌</a>
+      </li>
+    {% empty %}
+      <p>У вас пока нет задач.</p>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'tasks',
+    'users',
     'django.contrib.staticfiles',
 ]
 
@@ -51,10 +53,16 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 
+LOGIN_REDIRECT_URL = "task_list"
+LOGOUT_REDIRECT_URL = "login"
+LOGIN_URL = "login"
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates',  # Путь к папке templates в корне проекта
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -94,6 +102,8 @@ CACHES = {
 }
 
 CELERY_BROKER_URL = "redis://redis:6379/1"
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

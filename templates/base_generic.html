@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}To-Do List{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>Мой To-Do List</h1>
+        <nav>
+            <a href="{% url 'task_list' %}">Задачи</a> |
+            {% if user.is_authenticated %}
+                <!-- Форма для выхода -->
+                <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Выйти</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Здесь будет подставляться контент из дочерних шаблонов -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>© 2025 To-Do List</p>
+    </footer>
+</body>
+</html>

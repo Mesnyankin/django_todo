@@ -1,3 +1,5 @@
+[Project screenshots](https://github.com/Mesnyankin/django_todo/issues/1)
+
 <b>Project idea.</b><br>
 We will develop To-Do List – a web application for task management.<br>
 Users will be able to:

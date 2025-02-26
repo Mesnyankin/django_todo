@@ -3,32 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}To-Do List{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet"  rel="stylesheet" media="screen" href="{% static 'css/styles.css' %}" />
 </head>
 <body>
     <header>
-        <h1>Мой To-Do List</h1>
+        <div class="logo">
+            <img src="/static/img/logo.png" title=""/>
+        </div>
         <nav>
-            <a href="{% url 'task_list' %}">Задачи</a> |
             {% if user.is_authenticated %}
+                <!--<a href="{% url 'task_list' %}">Tasks</a>-->
+                <p>Hello, {{ request.user.username }}!|
                 <!-- Форма для выхода -->
-                <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+                <a href="#" onclick="document.getElementById('logout-form').submit(); return false;">Sign out</a></p>
+                <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
                     {% csrf_token %}
-                    <button type="submit">Выйти</button>
                 </form>
             {% else %}
-                <a href="{% url 'login' %}">Войти</a>
+                <!--<a href="{% url 'login' %}">Sign in</a>-->
             {% endif %}
         </nav>
     </header>
 
     <main>
-        {% block content %}
-        <!-- Здесь будет подставляться контент из дочерних шаблонов -->
-        {% endblock %}
+            {% block content %}
+            <!-- Здесь будет подставляться контент из дочерних шаблонов -->
+            {% endblock %}
     </main>
-
     <footer>
-        <p>© 2025 To-Do List</p>
+        <div class="footer">
+            Mesnyankin company © 2025 To-Do List
+        </div>
     </footer>
 </body>
 </html>

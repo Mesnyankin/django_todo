@@ -1,11 +1,25 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h2>Регистрация</h2>
-  <form method="post">
+<div class="login">
+  <h3>Sign up To-Do List</h3>
+  {% if form.errors %}
+        {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+            <p class="error">{{ field }}: {{ error }}</p>
+            {% endfor %}
+        {% endfor %}
+  {% endif %}
+  <form class="contact_form" method="post" name="contact_form">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Зарегистрироваться</button>
+    <label for="username_id">Username:</label></br>
+    {{ form.username }}<span class="form_hint">This value may contain only letters, numbers, and @/./+/-/_ characters.</span></br>
+    <label for="password1_id">Password:</label></br>
+    {{ form.password1 }}<span class="form_hint">It must contain at least 8 characters.</span></br>
+    <label for="password2_id">Confirm password:</label></br>
+    {{ form.password2 }}</br>
+    <button class="submit" type="submit">Continue ></button>
   </form>
-  <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
+  Do you already have an account? | <a href="{% url 'login' %}">Sign in</a>
 {% endblock %}
+</div>

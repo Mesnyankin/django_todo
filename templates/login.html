@@ -1,14 +1,19 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h2>Вход</h2>
+<div class="login">
+  <h3>Sign in To-Do List</h3>
   {% if form.errors %}
-    <p style="color: red;">Неверный логин или пароль. Попробуйте снова.</p>
+    <p class="error">Invalid username or password. Try again.</p>
   {% endif %}
-  <form method="post">
+  <form class="contact_form" method="post" name="contact_form">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Войти</button>
+    <label for="name">Username:</label></br>
+    {{ form.username }}</br>
+    <label for="password">Password:</label></br>
+    {{ form.password }}</br>
+    <button class="submit" type="submit">Sign in</button>
   </form>
-  <p>Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
+  No account? | <a href="{% url 'register' %}">Create an account</a>
+</div>
 {% endblock %}

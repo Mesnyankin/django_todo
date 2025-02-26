@@ -4,6 +4,7 @@ services:
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/app
+      - ./staticfiles:/opt/django_todo/staticfiles  # Проброс статики
     ports:
       - "8000:8000"
     depends_on:

@@ -1,17 +1,48 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h2>Список задач</h2>
-  <a href="{% url 'task_create' %}">Добавить задачу</a>
-  <ul>
-    {% for task in tasks %}
-      <li>
-        <strong>{{ task.title }}</strong> - {{ task.description }}
-        <a href="{% url 'task_update' task.id %}">✏️</a>
-        <a href="{% url 'task_delete' task.id %}" style="color: red;">❌</a>
-      </li>
-    {% empty %}
-      <p>У вас пока нет задач.</p>
-    {% endfor %}
-  </ul>
+ <h3>Task list</h3>
+ <table border="1">
+  <thead>
+      <tr>
+          <th>ID</th>
+          <th>Date</th>
+          <th>Title</th>
+          <th>Description </th>
+          <th>Status</th>
+          <th>Control</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for task in tasks %}
+      <tr>
+          <td>{{ task.id }}</td>
+          <td>{{ task.due_date|date:"d.m.Y" }}</td>
+          <td>{{ task.title }}</td>
+          <td>{{ task.description }}</td>
+          <td style="text-align: center; vertical-align: middle;">
+              {% if task.completed %}
+                  ✅
+              {% else %}
+                  ⏳
+              {% endif %}
+          </td>
+          <td style="text-align: center; vertical-align: middle;">
+            <a href="{% url 'task_update' task.id %}">✏️</a>
+            <a href="{% url 'task_delete' task.id %}" style="color: red;">❌</a>
+          </td>
+      </tr>
+      {% empty %}
+      <tr>
+          <td colspan="6">You don't have any tasks yet.</td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+<form class="contact_form" method="post" action="{% url 'task_create' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="submit" type="submit">Add a task</button>
+</form>
 {% endblock %}
+

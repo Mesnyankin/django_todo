@@ -1,15 +1,18 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import login
+from django.contrib import messages
+from .forms import CustomUserCreationForm
 
 # Create your views here.
-from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
-
 def register(request):
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect("login")  # Перенаправление на страницу входа
+            user = form.save()
+            login(request, user)
+            return redirect("task_list")
+        else:
+            messages.error(request, "Registration error. Check the entered data.")
     else:
-        form = UserCreationForm()
-    return render(request, "register.html", {"form": form})
+        form = CustomUserCreationForm()
+    return render(request, 'register.html', {'form': form})
